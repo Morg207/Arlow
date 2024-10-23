@@ -177,11 +177,11 @@ class Snake():
         self.handle_keyboard_input()
         self.handle_controller_input()
         self.apple.update()
+        self.move()
         head = self.body[0]
         self.collide_with_body(head)
         self.collide_with_apple(head)
         self.collide_with_walls(head)
-        self.move()
 
     def draw(self):
         for body_part in self.body:
