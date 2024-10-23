@@ -37,10 +37,10 @@ class HungerBar():
         self.start_hunger = self.hunger
         self.bar_length = 100
         self.bar_height = 20
-        self.fill = (self.hunger / self.start_hunger) * self.bar_length
-        self.fill_bar = pygame.Rect(200,50,self.fill,self.bar_height)
         self.x = 410
         self.y = 40
+        self.fill = (self.hunger / self.start_hunger) * self.bar_length
+        self.fill_bar = pygame.Rect(self.x,self.y,self.fill,self.bar_height)
         self.hunger_text_x = 460
         self.hunger_text_y = 25
         self.background_bar = pygame.Rect(self.x,self.y,self.bar_length,self.bar_height)
