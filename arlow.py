@@ -160,8 +160,14 @@ class Snake():
                 self.hunger_bar.hunger -= self.hunger_bar.eat_amount
                 self.score += 1
                 self.eat_sound.play()
-            if head.y != window_cell_y and head.y != num_cells_y-1 and head.x != 0 and head.x != num_cells_x-1:
-                self.body.insert(0,self.body[0]+self.direction)
+            if head.y > window_cell_y and head.y < num_cells_y-1 and head.x > 0 and head.x < num_cells_x-1:
+                   self.body.insert(0,self.body[0]+self.direction)
+            elif head.y == window_cell_y or head.y == num_cells_y-1:
+                if head.x != 0 and head.x != num_cells_x-1 and self.direction != pygame.Vector2(0,1) and self.direction != pygame.Vector2(0,-1):
+                   self.body.insert(0,self.body[0]+self.direction)
+            elif head.x == 0 or head.x == num_cells_x-1:
+                if head.y != window_cell_y and head.y != num_cells_y-1 and self.direction != pygame.Vector2(1,0) and self.direction != pygame.Vector2(-1,0):
+                   self.body.insert(0,self.body[0]+self.direction)
 
     def collide_with_body(self,head):
         for body_part in self.body[1:len(self.body)]:
