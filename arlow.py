@@ -160,7 +160,6 @@ class Snake():
                 self.hunger_bar.hunger -= self.hunger_bar.eat_amount
                 self.score += 1
                 self.eat_sound.play()
-            if head.y != window_cell_y and head.y != num_cells_y-1 and head.x != 0 and head.x != num_cells_x-1:
                 self.body.insert(0,self.body[0]+self.direction)
 
     def collide_with_body(self,head):
