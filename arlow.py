@@ -48,10 +48,12 @@ class HungerBar():
         self.eat_amount = 15
         self.refill_amount = 0.4
         self.refill = False
+        self.refill_time = 0
 
     def update(self):
         if self.hunger <= self.hunger_threshold:
             self.refill = True
+            self.refill_time = pygame.time.get_ticks()/1000
         if self.refill:
             self.hunger += self.refill_amount
             if self.hunger > self.start_hunger:
@@ -113,6 +115,7 @@ class Snake():
         self.reset()
         self.eat_sound = pygame.mixer.Sound("Sounds/eat sound.ogg")
         self.lose_sound = pygame.mixer.Sound("Sounds/lose sound.mp3")
+        self.flash_time = 0.2
 
     def reset(self):
         self.hunger_bar = HungerBar()
@@ -188,10 +191,20 @@ class Snake():
         self.collide_with_body(head)
         self.collide_with_apple(head)
         self.collide_with_walls(head)
-
-    def draw(self):
+        
+    def draw_body(self):
         for body_part in self.body:
             pygame.draw.rect(window,(100,100,100),pygame.Rect(body_part.x*cell_size,body_part.y*cell_size,cell_size,cell_size),border_radius=6,width=12)
+
+    def draw(self):
+        if self.hunger_bar.refill:
+            time_now = pygame.time.get_ticks()/1000
+            if time_now - self.hunger_bar.refill_time < self.flash_time:
+                self.draw_body()
+            elif time_now - self.hunger_bar.refill_time >= self.flash_time+0.2:
+                self.hunger_bar.refill_time = pygame.time.get_ticks()/1000
+        else:
+                self.draw_body()
         self.apple.draw()
         self.hunger_bar.draw()
 
